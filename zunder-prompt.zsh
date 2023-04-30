@@ -1,6 +1,4 @@
-# Simple Zsh prompt with Git status.
-
-# Source gitstatus.plugin.zsh from $GITSTATUS_DIR or from the same directory
+# Source gitstatus.plugin.zsh
 0="${${ZERO:-${0:#$ZSH_ARGZERO}}:-${(%):-%N}}"
 0="${${(M)0:#/*}:-$PWD/$0}"
 source "${0:A:h}/gitstatus/gitstatus.plugin.zsh" || return
@@ -36,9 +34,9 @@ function gitstatus_prompt_update() {
   [[ $VCS_STATUS_RESULT == 'ok-sync' ]] || return 0  # not a git repo
 
   local      clean='%2F'   # green foreground
-  local   modified='%3F'  # yellow foreground
+  local   modified='%3F'   # yellow foreground
   local  untracked='%4F'   # blue foreground
-  local conflicted='%1F'  # red foreground
+  local conflicted='%1F'   # red foreground
 
   local p
 
@@ -109,4 +107,4 @@ PROMPT=$'\n'                                           # new line
 PROMPT+='%4F%$((-GITSTATUS_PROMPT_LEN-1))<…<%~%<<%f'   # blue current working directory
 PROMPT+='${GITSTATUS_PROMPT:+ $GITSTATUS_PROMPT}'      # git status
 PROMPT+=$'\n'                                          # new line
-PROMPT+='%F{%(?.3.1)}%f '                             # %/# (normal/root); green/red (ok/error)
+PROMPT+='%F{%(?.3.1)}%f '                             # yellow/red (ok/error)
