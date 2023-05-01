@@ -33,13 +33,15 @@ function gitstatus_prompt_update() {
   gitstatus_query 'MY'                  || return 1  # error
   [[ $VCS_STATUS_RESULT == 'ok-sync' ]] || return 0  # not a git repo
 
-  local      clean='%2F'   # green foreground
+  local      clean='%5F'   # magenta foreground
   local   modified='%3F'   # yellow foreground
   local  untracked='%4F'   # blue foreground
   local conflicted='%1F'   # red foreground
 
   local p
 
+  local git_prefix="on"
+  local git_icon=""
   local where  # branch name, tag or commit
   if [[ -n $VCS_STATUS_LOCAL_BRANCH ]]; then
     where=$VCS_STATUS_LOCAL_BRANCH
@@ -52,7 +54,7 @@ function gitstatus_prompt_update() {
   fi
 
   (( $#where > 32 )) && where[13,-13]="…"  # truncate long branch names and tags
-  p+="${clean}${where//\%/%%}"             # escape %
+  p+="${git_prefix} %B${clean}${git_icon} ${where//\%/%%}"      # escape %
 
   # ⇣42 if behind the remote.
   (( VCS_STATUS_COMMITS_BEHIND )) && p+=" ${clean}⇣${VCS_STATUS_COMMITS_BEHIND}"
@@ -77,7 +79,7 @@ function gitstatus_prompt_update() {
   # ?42 if have untracked files. It's really a question mark, your font isn't broken.
   (( VCS_STATUS_NUM_UNTRACKED  )) && p+=" ${untracked}?${VCS_STATUS_NUM_UNTRACKED}"
 
-  GITSTATUS_PROMPT="${p}%f"
+  GITSTATUS_PROMPT="${p}%f%b"
 
   # The length of GITSTATUS_PROMPT after removing %f and %F.
   GITSTATUS_PROMPT_LEN="${(m)#${${GITSTATUS_PROMPT//\%\%/x}//\%(f|<->F)}}"
@@ -103,8 +105,8 @@ setopt no_prompt_bang prompt_percent prompt_subst
 #     █
 #
 # The current directory gets truncated from the left if the whole prompt doesn't fit on the line.
-PROMPT=$'\n'                                           # new line
-PROMPT+='%4F%$((-GITSTATUS_PROMPT_LEN-1))<…<%~%<<%f'   # blue current working directory
-PROMPT+='${GITSTATUS_PROMPT:+ $GITSTATUS_PROMPT}'      # git status
-PROMPT+=$'\n'                                          # new line
-PROMPT+='%F{%(?.3.1)}%f '                             # yellow/red (ok/error)
+PROMPT=$'\n'                                               # new line
+PROMPT+='%B%6F%$((-GITSTATUS_PROMPT_LEN-1))<…<%~%<<%f%b'   # cyan current working directory
+PROMPT+='${GITSTATUS_PROMPT:+ $GITSTATUS_PROMPT}'          # git status
+PROMPT+=$'\n'                                              # new line
+PROMPT+='%F{%(?.3.1)}%f '                                 # yellow/red (ok/error)
