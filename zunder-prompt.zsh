@@ -40,8 +40,8 @@ function gitstatus_prompt_update() {
 
   local p
 
-  local git_prefix="on"
-  local git_icon=""
+  local git_prefix="on "
+  local git_icon=" "
   local where  # branch name, tag or commit
   if [[ -n $VCS_STATUS_LOCAL_BRANCH ]]; then
     where=$VCS_STATUS_LOCAL_BRANCH
@@ -53,8 +53,8 @@ function gitstatus_prompt_update() {
     where=${VCS_STATUS_COMMIT[1,8]}
   fi
 
-  (( $#where > 32 )) && where[13,-13]="…"  # truncate long branch names and tags
-  p+="${git_prefix} %B${clean}${git_icon} ${where//\%/%%}"      # escape %
+  (( $#where > 32 )) && where[13,-13]="…"                  # truncate long branch names and tags
+  p+="${git_prefix}%B${clean}${git_icon}${where//\%/%%}"   # escape %
 
   # ⇣42 if behind the remote.
   (( VCS_STATUS_COMMITS_BEHIND )) && p+=" ${clean}⇣${VCS_STATUS_COMMITS_BEHIND}"
@@ -101,7 +101,7 @@ setopt no_prompt_bang prompt_percent prompt_subst
 #
 # Example:
 #
-#   ~/projects/skynet master ⇡42
+#   ~/projects/skynet on  master ⇡42
 #     █
 #
 # The current directory gets truncated from the left if the whole prompt doesn't fit on the line.
