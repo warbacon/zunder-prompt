@@ -97,6 +97,34 @@ add-zsh-hook precmd gitstatus_prompt_update
 # Enable/disable the right prompt options.
 setopt no_prompt_bang prompt_percent prompt_subst
 
+function preexec() {
+  timer=$(date +%s%3N)
+}
+
+function precmd() {
+  if [ $timer ]; then
+    local now=$(date +%s%3N)
+    local d_ms=$(($now-$timer))
+    local d_s=$((d_ms / 1000))
+    local ms=$((d_ms % 1000))
+    local s=$((d_s % 60))
+    local m=$(((d_s / 60) % 60))
+    local h=$((d_s / 3600))
+    if ((h > 0)); then elapsed=${h}h${m}m
+    elif ((m > 0)); then elapsed=${m}m${s}s
+    elif ((s >= 3)); then elapsed=${s}s
+    else elapsed=0; fi
+
+    if [[ $elapsed == 0 ]]; then
+      elapsed=""
+    else
+      elapsed=" took %B%F{yellow}$elapsed%f%b"
+    fi
+
+    unset timer
+  fi
+}
+
 # Customize prompt. Put $GITSTATUS_PROMPT in it to reflect git status.
 #
 # Example:
@@ -108,5 +136,7 @@ setopt no_prompt_bang prompt_percent prompt_subst
 PROMPT=$'\n'                                               # new line
 PROMPT+='%B%6F%$((-GITSTATUS_PROMPT_LEN-1))<…<%~%<<%f%b'   # cyan current working directory
 PROMPT+='${GITSTATUS_PROMPT:+ $GITSTATUS_PROMPT}'          # git status
+PROMPT+='$elapsed'                                         # time elapsed
 PROMPT+=$'\n'                                              # new line
-PROMPT+='%F{%(?.3.1)}%f '                                 # yellow/red (ok/error)
+PROMPT+=$'%F{%(?.3.1)}%f '                                # yellow/red (ok/error)
+
