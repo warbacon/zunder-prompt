@@ -15,7 +15,7 @@ and its git information is very helpful, but it has too many features
 that I don't use and it's difficult to configure for colors.
 
 So I built my own prompt with the colors of Starship and git information from gitstatus,
-which uses Powerlevel10k. Only with that.
+which uses Powerlevel10k.
 
 Because of that, this prompt is faster than Starship but easier to modify than Powerlevel10k.
 However, Powerlevel10k can be even faster if you use the instant-prompt functionality.
