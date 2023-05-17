@@ -1,6 +1,6 @@
 # zunder-prompt
 
-Simple and fast zsh prompt based on [gitsatus](https://github.com/romkatv/gitstatus),
+Simple and fast zsh prompt based on [gitstatus](https://github.com/romkatv/gitstatus),
 built for using it in [zunder-zsh](https://github.com/Warbacon/zunder-prompt)
 but compatible with any configuration.
 
