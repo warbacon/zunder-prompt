@@ -125,18 +125,28 @@ function precmd() {
   fi
 }
 
+# Default values for prompt customization variables.
+if [[ -z $ZUNDER_CHAR_SYMBOL ]]; then
+  ZUNDER_CHAR_SYMBOL=""
+fi
+
+# You can use any color from 0 to 255 or a color name.
+if [[ -z $ZUNDER_CHAR_COLOR ]]; then
+  ZUNDER_CHAR_COLOR=3   # equivalent to "yellow"
+fi
+
 # Customize prompt. Put $GITSTATUS_PROMPT in it to reflect git status.
 #
 # Example:
 #
-#   ~/projects/skynet on  master ⇡42
+#   ~/projects/skynet on  master ⇡42 took 3m2s
 #     █
 #
 # The current directory gets truncated from the left if the whole prompt doesn't fit on the line.
-PROMPT=$'\n'                                               # new line
-PROMPT+='%B%6F%$((-GITSTATUS_PROMPT_LEN-1))<…<%~%<<%f%b'   # cyan current working directory
-PROMPT+='${GITSTATUS_PROMPT:+ $GITSTATUS_PROMPT}'          # git status
-PROMPT+='$elapsed'                                         # time elapsed
-PROMPT+=$'\n'                                              # new line
-PROMPT+=$'%F{%(?.3.1)}%f '                                # yellow/red (ok/error)
+PROMPT=$'\n'                                                       # new line
+PROMPT+='%B%6F%$((-GITSTATUS_PROMPT_LEN-1))<…<%~%<<%f%b'           # cyan current working directory
+PROMPT+='${GITSTATUS_PROMPT:+ $GITSTATUS_PROMPT}'                  # git status
+PROMPT+='$elapsed'                                                 # time elapsed
+PROMPT+=$'\n'                                                      # new line
+PROMPT+=$'%F{%(?.$ZUNDER_CHAR_COLOR.1)}$ZUNDER_CHAR_SYMBOL%f '     # specified color/red (ok/error)
 

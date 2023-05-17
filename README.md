@@ -43,6 +43,17 @@ zi ice compile"./gitstatus/gitstatus.plugin.zsh"
 zi light "Warbacon/zunder-prompt"
 ```
 
+## Customization
+
+As zunder-prompt is built with simplicity and speed in mind, there isn't too
+much customization available. However, you can change the prompt's character
+symbol and its color by modifying the following environment variables:
+
+```bash
+ZUNDER_CHAR_SYMBOL="❯"       # default value: ""
+ZUNDER_CHAR_COLOR="green"    # default value: "yellow"
+```
+
 ## Thanks to
 
 - [gitsatus](https://github.com/romkatv/gitstatus)
