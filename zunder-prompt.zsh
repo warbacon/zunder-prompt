@@ -102,6 +102,16 @@ function preexec() {
 }
 
 function precmd() {
+  if [[ -n $ZUNDER_CHAR_SYMBOL && $ZUNDER_PROMPT_CHAR_SYMBOL != $ZUNDER_CHAR_SYMBOL ]]; then
+    echo "ZUNDER_CHAR_SYMBOL is deprecated. Use ZUNDER_PROMPT_CHAR_SYMBOL instead."
+    ZUNDER_PROMPT_CHAR_SYMBOL=$ZUNDER_CHAR_SYMBOL
+  fi
+
+  if [[ -n $ZUNDER_CHAR_COLOR && $ZUNDER_PROMPT_CHAR_COLOR != $ZUNDER_CHAR_COLOR ]]; then
+    echo "ZUNDER_CHAR_COLOR is deprecated. Use ZUNDER_PROMPT_CHAR_COLOR instead."
+    ZUNDER_PROMPT_CHAR_COLOR=$ZUNDER_CHAR_COLOR
+  fi
+
   if [ $timer ]; then
     local now=$(date +%s%3N)
     local d_ms=$(($now-$timer))
@@ -126,13 +136,13 @@ function precmd() {
 }
 
 # Default values for prompt customization variables.
-if [[ -z $ZUNDER_CHAR_SYMBOL ]]; then
-  ZUNDER_CHAR_SYMBOL=""
+if [[ -z $ZUNDER_PROMPT_CHAR ]]; then
+  ZUNDER_PROMPT_CHAR=""        # default prompt character
 fi
 
 # You can use any color from 0 to 255 or a color name.
-if [[ -z $ZUNDER_CHAR_COLOR ]]; then
-  ZUNDER_CHAR_COLOR=3   # equivalent to "yellow"
+if [[ -z $ZUNDER_PROMPT_CHAR_COLOR ]]; then
+  ZUNDER_PROMPT_CHAR_COLOR=3    # equivalent to yellow
 fi
 
 # Customize prompt. Put $GITSTATUS_PROMPT in it to reflect git status.
@@ -143,10 +153,10 @@ fi
 #     █
 #
 # The current directory gets truncated from the left if the whole prompt doesn't fit on the line.
-PROMPT=$'\n'                                                       # new line
-PROMPT+='%B%6F%$((-GITSTATUS_PROMPT_LEN-1))<…<%~%<<%f%b'           # cyan current working directory
-PROMPT+='${GITSTATUS_PROMPT:+ $GITSTATUS_PROMPT}'                  # git status
-PROMPT+='$elapsed'                                                 # time elapsed
-PROMPT+=$'\n'                                                      # new line
-PROMPT+=$'%F{%(?.$ZUNDER_CHAR_COLOR.1)}$ZUNDER_CHAR_SYMBOL%f '     # specified color/red (ok/error)
+PROMPT=$'\n'                                                           # new line
+PROMPT+='%B%6F%$((-GITSTATUS_PROMPT_LEN-1))<…<%~%<<%f%b'               # cyan current working directory
+PROMPT+='${GITSTATUS_PROMPT:+ $GITSTATUS_PROMPT}'                      # git status
+PROMPT+='$elapsed'                                                     # time elapsed
+PROMPT+=$'\n'                                                          # new line
+PROMPT+=$'%F{%(?.$ZUNDER_PROMPT_CHAR_COLOR.1)}$ZUNDER_PROMPT_CHAR%f '  # specified color/red (ok/error)
 

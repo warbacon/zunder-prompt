@@ -50,9 +50,12 @@ much customization available. However, you can change the prompt's character
 symbol and its color by modifying the following environment variables:
 
 ```bash
-ZUNDER_CHAR_SYMBOL="❯"       # default value: ""
-ZUNDER_CHAR_COLOR="green"    # default value: "yellow"
+ZUNDER_PROMPT_CHAR="❯"             # default value: ""
+ZUNDER_PROMPT_CHAR_COLOR="green"   # default value: "yellow"
 ```
+
+`ZUNDER_PROMPT_CHAR_COLOR` does accept any color between 0 and 255
+or a color name.
 
 ## Thanks to
 
