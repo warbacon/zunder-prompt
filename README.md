@@ -26,20 +26,20 @@ However, Powerlevel10k can be even faster if you use the instant-prompt function
 
 1. Clone this repository wherever you want.
 
-    ```bash
+    ```sh
     git clone https://github.com/Warbacon/zunder-prompt.git
     ```
 
 2. Source `zunder-prompt.zsh` in your `.zshrc`.
 
-    ```bash
+    ```sh
     source /wherever/you/cloned/this/repo/zunder-prompt.zsh
     ```
 
 ### Zinit
 
-```bash
-zi ice compile"./gitstatus/gitstatus.plugin.zsh"
+```sh
+zi ice compile'./gitstatus/(install|*.zsh)'
 zi light "Warbacon/zunder-prompt"
 ```
 
@@ -49,7 +49,7 @@ As zunder-prompt is built with simplicity and speed in mind, there isn't too
 much customization available. However, you can change the prompt's character
 symbol and its color by modifying the following environment variables:
 
-```bash
+```sh
 ZUNDER_PROMPT_CHAR="❯"             # default value: ""
 ZUNDER_PROMPT_CHAR_COLOR="green"   # default value: "yellow"
 ```
