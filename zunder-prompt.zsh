@@ -41,7 +41,13 @@ function gitstatus_prompt_update() {
   local p
 
   local git_prefix="on "
-  local git_icon=" "
+
+  if [[ -n $DISPLAY ]]; then
+    local git_icon=" "
+  else
+    local git_icon=""
+  fi
+
   local where  # branch name, tag or commit
   if [[ -n $VCS_STATUS_LOCAL_BRANCH ]]; then
     where=$VCS_STATUS_LOCAL_BRANCH
@@ -136,7 +142,9 @@ function precmd() {
 }
 
 # Default values for prompt customization variables.
-if [[ -z $ZUNDER_PROMPT_CHAR ]]; then
+if [[ -z $DISPLAY ]]; then
+  ZUNDER_PROMPT_CHAR='>'        # default prompt character in tty
+elif [[ -z $ZUNDER_PROMPT_CHAR ]]; then
   ZUNDER_PROMPT_CHAR=""        # default prompt character
 fi
 
