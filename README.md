@@ -27,7 +27,7 @@ However, Powerlevel10k can be even faster if you use the instant-prompt function
 1. Clone this repository wherever you want.
 
     ```sh
-    git clone https://github.com/Warbacon/zunder-prompt.git
+    git clone --recursive https://github.com/Warbacon/zunder-prompt.git
     ```
 
 2. Source `zunder-prompt.zsh` in your `.zshrc`.
