@@ -27,7 +27,7 @@ However, Powerlevel10k can be even faster if you use the instant-prompt function
 1. Clone this repository wherever you want.
 
     ```sh
-    git clone --recursive https://github.com/Warbacon/zunder-prompt.git
+    git clone --recursive --shallow-submodules https://github.com/Warbacon/zunder-prompt.git
     ```
 
 2. Source `zunder-prompt.zsh` in your `.zshrc`.
@@ -39,7 +39,8 @@ However, Powerlevel10k can be even faster if you use the instant-prompt function
 ### Zinit
 
 ```sh
-zi ice compile'./gitstatus/(install|*.zsh)'
+zi ice cloneopts"--recursive --shallow-submodules" \
+    compile'./gitstatus/(install|*.zsh)'
 zi light "Warbacon/zunder-prompt"
 ```
 
