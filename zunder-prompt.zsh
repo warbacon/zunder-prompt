@@ -104,15 +104,13 @@ add-zsh-hook precmd gitstatus_prompt_update
 setopt no_prompt_bang prompt_percent prompt_subst
 
 function preexec() {
-  timer=$(date +%s%3N)
+  timer=$(date +%s)
 }
 
 function precmd() {
   if [ $timer ]; then
-    local now=$(date +%s%3N)
-    local d_ms=$(($now-$timer))
-    local d_s=$((d_ms / 1000))
-    local ms=$((d_ms % 1000))
+    local now=$(date +%s)
+    local d_s=$(($now - $timer))
     local s=$((d_s % 60))
     local m=$(((d_s / 60) % 60))
     local h=$((d_s / 3600))
