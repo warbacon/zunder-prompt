@@ -40,13 +40,8 @@ function gitstatus_prompt_update() {
 
   local p
 
-  local git_prefix="on "
-
-  if [[ -n $DISPLAY ]]; then
-    local git_icon=" "
-  else
-    local git_icon=""
-  fi
+  local git_prefix='on '
+  [[ -n $DISPLAY || -n $TERMUX_VERSION || "$(uname)" == "Darwin" ]] && local git_icon=" "
 
   local where  # branch name, tag or commit
   if [[ -n $VCS_STATUS_LOCAL_BRANCH ]]; then
@@ -55,12 +50,12 @@ function gitstatus_prompt_update() {
     p+='%f#'
     where=$VCS_STATUS_TAG
   else
-    p+='%f@'
+    p+='f@'
     where=${VCS_STATUS_COMMIT[1,8]}
   fi
 
-  (( $#where > 32 )) && where[13,-13]="…"                  # truncate long branch names and tags
-  p+="${git_prefix}%B${clean}${git_icon}${where//\%/%%}"   # escape %
+  (( $#where > 32 )) && where[13,-13]="…"    # truncate long branch names and tags
+  p+="%B${clean}${git_icon}${where//\%/%%}"  # escape %
 
   # ⇣42 if behind the remote.
   (( VCS_STATUS_COMMITS_BEHIND )) && p+=" ${clean}⇣${VCS_STATUS_COMMITS_BEHIND}"
@@ -85,10 +80,10 @@ function gitstatus_prompt_update() {
   # ?42 if have untracked files. It's really a question mark, your font isn't broken.
   (( VCS_STATUS_NUM_UNTRACKED  )) && p+=" ${untracked}?${VCS_STATUS_NUM_UNTRACKED}"
 
-  GITSTATUS_PROMPT="${p}%f%b"
+  GITSTATUS_PROMPT="${git_prefix}${p}%f%b"
 
-  # The length of GITSTATUS_PROMPT after removing %f and %F.
-  GITSTATUS_PROMPT_LEN="${(m)#${${GITSTATUS_PROMPT//\%\%/x}//\%(f|<->F)}}"
+  # The length of GITSTATUS_PROMPT after removing %f, %b, %F and %B.
+  GITSTATUS_PROMPT_LEN="${(m)#${${${GITSTATUS_PROMPT//\%\%/x}//\%(f|<->F)}//\%(b|<->B)}}"
 }
 
 # Start gitstatusd instance with name "MY". The same name is passed to
@@ -103,54 +98,31 @@ add-zsh-hook precmd gitstatus_prompt_update
 # Enable/disable the right prompt options.
 setopt no_prompt_bang prompt_percent prompt_subst
 
-function preexec() {
-  timer=$(date +%s)
-}
-
-function precmd() {
-  if [ $timer ]; then
-    local now=$(date +%s)
-    local d_s=$(($now - $timer))
-    local s=$((d_s % 60))
-    local m=$(((d_s / 60) % 60))
-    local h=$((d_s / 3600))
-    if ((h > 0)); then elapsed=${h}h${m}m
-    elif ((m > 0)); then elapsed=${m}m${s}s
-    elif ((s >= 3)); then elapsed=${s}s
-    else elapsed=0; fi
-
-    if [[ $elapsed == 0 ]]; then
-      elapsed=""
-    else
-      elapsed=" took %B%F{yellow}$elapsed%f%b"
-    fi
-
-    unset timer
-  fi
-}
-
-# Default values for prompt customization variables.
+# Sets the default value of $ZUNDER_PROMPT_CHAR if not already done.
 if [[ -z $ZUNDER_PROMPT_CHAR ]]; then
-  ZUNDER_PROMPT_CHAR="❯"        # default prompt character
+  if [[ -n $DISPLAY || -n $TERMUX_VERSION || "$(uname)" == "Darwin" ]]; then
+    ZUNDER_PROMPT_CHAR='❯'   # default value in graphical mode
+  else
+    ZUNDER_PROMPT_CHAR='%#'  # default value in tty
+  fi
 fi
 
-# You can use any color from 0 to 255 or a color name.
-if [[ -z $ZUNDER_PROMPT_CHAR_COLOR ]]; then
-  ZUNDER_PROMPT_CHAR_COLOR=2    # equivalent to green
-fi
+# Sets the default value of $ZUNDER_PROMPT_CHAR_COLOR if not already done.
+# It can be an integer from 0 to 254 or an color or the name of a color
+# from the ANSI color palette.
+[[ -z $ZUNDER_PROMPT_CHAR_COLOR ]] && ZUNDER_PROMPT_CHAR_COLOR=2  # equivalent to "green"
 
 # Customize prompt. Put $GITSTATUS_PROMPT in it to reflect git status.
 #
 # Example:
 #
-#   ~/projects/skynet on  master ⇡42 took 3m2s
-#    ❯ █
+#   ~/projects/skynet on  master ⇡42
+#   ❯ █
 #
 # The current directory gets truncated from the left if the whole prompt doesn't fit on the line.
-PROMPT=$'\n'                                                           # new line
-PROMPT+='%B%6F%$((-GITSTATUS_PROMPT_LEN-1))<…<%~%<<%f%b'               # cyan current working directory
-PROMPT+='${GITSTATUS_PROMPT:+ $GITSTATUS_PROMPT}'                      # git status
-PROMPT+='$elapsed'                                                     # time elapsed
-PROMPT+=$'\n'                                                          # new line
-PROMPT+=$'%F{%(?.$ZUNDER_PROMPT_CHAR_COLOR.1)}$ZUNDER_PROMPT_CHAR%f '  # specified color/red (ok/error)
-
+PROMPT=$'\n'                                              # new line
+PROMPT+='%B%6F%$((-GITSTATUS_PROMPT_LEN-1))<…<%~%<<%f%b'  # cyan bold current working directory
+PROMPT+='${GITSTATUS_PROMPT:+ $GITSTATUS_PROMPT}'         # git status
+PROMPT+=$'\n'                                             # new line
+# $ZUNDER_PROMPT_CHAR $ZUNDER_PROMPT_CHAR_COLOR/red (ok/error)
+PROMPT+='%F{%(?.${ZUNDER_PROMPT_CHAR_COLOR}.1)}${ZUNDER_PROMPT_CHAR}%f '
