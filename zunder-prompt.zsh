@@ -38,24 +38,24 @@ function gitstatus_prompt_update() {
   local  untracked='%4F'   # blue foreground
   local conflicted='%1F'   # red foreground
 
-  local p
+  local git_icon
+  [[ -n $DISPLAY || -n $TERMUX_VERSION || "$(uname)" == "Darwin" ]] && git_icon=' '
 
-  local git_prefix='on '
-  [[ -n $DISPLAY || -n $TERMUX_VERSION || "$(uname)" == "Darwin" ]] && local git_icon=" "
+  local p="on %B${clean}${git_icon}"
 
   local where  # branch name, tag or commit
   if [[ -n $VCS_STATUS_LOCAL_BRANCH ]]; then
     where=$VCS_STATUS_LOCAL_BRANCH
   elif [[ -n $VCS_STATUS_TAG ]]; then
-    p+='%f#'
+    p+='#'
     where=$VCS_STATUS_TAG
   else
-    p+='f@'
+    p+='@'
     where=${VCS_STATUS_COMMIT[1,8]}
   fi
 
   (( $#where > 32 )) && where[13,-13]="…"    # truncate long branch names and tags
-  p+="%B${clean}${git_icon}${where//\%/%%}"  # escape %
+  p+="${where//\%/%%}"                       # escape %
 
   # ⇣42 if behind the remote.
   (( VCS_STATUS_COMMITS_BEHIND )) && p+=" ${clean}⇣${VCS_STATUS_COMMITS_BEHIND}"
@@ -80,7 +80,7 @@ function gitstatus_prompt_update() {
   # ?42 if have untracked files. It's really a question mark, your font isn't broken.
   (( VCS_STATUS_NUM_UNTRACKED  )) && p+=" ${untracked}?${VCS_STATUS_NUM_UNTRACKED}"
 
-  GITSTATUS_PROMPT="${git_prefix}${p}%f%b"
+  GITSTATUS_PROMPT="${p}%f%b"
 
   # The length of GITSTATUS_PROMPT after removing %f, %b, %F and %B.
   GITSTATUS_PROMPT_LEN="${(m)#${${${GITSTATUS_PROMPT//\%\%/x}//\%(f|<->F)}//\%(b|<->B)}}"
