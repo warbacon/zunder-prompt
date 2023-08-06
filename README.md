@@ -1,24 +1,31 @@
 # zunder-prompt
 
-Simple and fast zsh prompt based on [gitstatus](https://github.com/romkatv/gitstatus),
-built for using it in [zunder-zsh](https://github.com/Warbacon/zunder-prompt)
-but compatible with any configuration.
+Simple and fast zsh prompt based on [gitstatus](https://github.com/romkatv/gitstatus).
 
 ![preview](./assets/preview.webp)
 
 ## Why?
 
-I found myself oscillating between Starship and Powerlevel10k for
-my preferred zsh prompt. Starship is very attractive, but it has
-too many features for my needs. On the other hand, Powerlevel10k is fast
-and its git information is very helpful, but it has too many features
-that I don't use and it's difficult to configure for colors.
+I found myself oscillating between **Starship** and **Powerlevel10k** for my preferred
+zsh prompt. Starship is very customizable and attractive by default,
+but it has too many features that I don't use and that makes it slower than
+I would like. Powerlevel10k on the other hand is extremely fast but the
+configuration file is extremely complex.
 
-So I built my own prompt with the colors of Starship and git information from gitstatus,
-which uses Powerlevel10k.
+My goal then was to create a prompt with the **basic functionality needed**.
+After mulling this over, I came to the conclusion that simply seeing if
+the previous command had failed and the information from the git repository
+I was in was enough.
 
-Because of that, this prompt is faster than Starship but easier to modify than Powerlevel10k.
-However, Powerlevel10k can be even faster if you use the instant-prompt functionality.
+I also decided to **dispense with too many advanced customization options**,
+as that would complicate the code and would not be necessary
+if it was already pretty enough by default.
+
+Zunder-prompt is inspired by Starship for its look and feel and uses
+gitstatus to display git information. Normally the latter should slow down
+the prompt quite a bit, however, this project is the same one that Powerlevel10k
+uses for it and is extremely optimized, so the prompt has **no lag**
+at all and **works instantly**.
 
 ## Installation
 
@@ -39,9 +46,9 @@ However, Powerlevel10k can be even faster if you use the instant-prompt function
 ### Zinit
 
 ```sh
-zi ice cloneopts"--recursive --shallow-submodules" \
-    compile'./gitstatus/(install|*.zsh)'
-zi light "Warbacon/zunder-prompt"
+zinit cloneopts"--recursive --shallow-submodules" \
+compile'./gitstatus/(install|*.zsh)' for \
+    Warbacon/zunder-prompt
 ```
 
 ## Customization
