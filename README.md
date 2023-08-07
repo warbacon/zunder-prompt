@@ -34,7 +34,7 @@ at all and **works instantly**.
 1. Clone this repository wherever you want.
 
     ```sh
-    git clone --recursive --shallow-submodules https://github.com/Warbacon/zunder-prompt.git
+    git clone https://github.com/Warbacon/zunder-prompt.git
     ```
 
 2. Source `zunder-prompt.zsh` in your `.zshrc`.
@@ -46,8 +46,7 @@ at all and **works instantly**.
 ### Zinit
 
 ```sh
-zinit cloneopts"--recursive --shallow-submodules" \
-compile'./gitstatus/(install|*.zsh)' for \
+zinit compile'./gitstatus/(install|*.zsh)' for \
     Warbacon/zunder-prompt
 ```
 
