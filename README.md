@@ -50,6 +50,15 @@ zinit compile'./gitstatus/(install|*.zsh)' for \
     Warbacon/zunder-prompt
 ```
 
+### Another plugin manager
+
+I have not checked if it works with other plugin managers, but there **should not
+be any problem** as long as you follow the usual procedure to install
+a plugin in that plugin manager.
+
+I will try to check if it works in the most common ones and give instructions
+if necessary in the future. **Feel free to report to me any errors you find.**
+
 ## Customization
 
 As zunder-prompt is built with simplicity and speed in mind, there isn't too
