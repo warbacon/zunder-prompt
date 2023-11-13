@@ -69,9 +69,23 @@ function gitstatus_prompt_update() {
 # enable staged, unstaged, conflicted and untracked counters.
 gitstatus_stop 'MY' && gitstatus_start -s -1 -u -1 -c -1 -d -1 'MY'
 
-# On every prompt, fetch git status and set GITSTATUS_PROMPT.
+function conda_prompt_update() {
+  if [[ -n "$CONDA_DEFAULT_ENV" ]]; then
+    CONDA_PROMPT=" %B%2F(${CONDA_DEFAULT_ENV})%f%b"
+    CONDA_PROMPT_LEN="${(m)#${${${CONDA_PROMPT//\%\%/x}//\%(f|<->F)}//\%[Bb]}}"
+  else
+    CONDA_PROMPT=""
+    CONDA_PROMPT_LEN=0
+  fi
+}
+
 autoload -Uz add-zsh-hook
+
+# On every prompt, fetch git status and set GITSTATUS_PROMPT.
 add-zsh-hook precmd gitstatus_prompt_update
+
+# On every prompt, fetch conda env and set CONDA_PROMPT.
+add-zsh-hook precmd conda_prompt_update
 
 # Enable/disable the right prompt options.
 setopt no_prompt_bang prompt_percent prompt_subst
@@ -81,8 +95,9 @@ ZUNDER_PROMPT_CHAR='❯'
 [[ "$TERM" == "linux" ]] && ZUNDER_PROMPT_CHAR='>'  # switch to ascii in tty mode
 
 # The current directory gets truncated from the left if the whole prompt doesn't fit on the line.
-PROMPT=$'\n'                                                # new line
-PROMPT+='%B%6F%$((-GITSTATUS_PROMPT_LEN-1))<…<%~%<<%f%b'    # cyan current working directory
-PROMPT+='${GITSTATUS_PROMPT:+ $GITSTATUS_PROMPT}'           # git status
-PROMPT+=$'\n'                                               # new line
-PROMPT+='%F{%(?.2.1)}${ZUNDER_PROMPT_CHAR}%f '              # $ZUNDER_PROMPT_CHAR green/red (ok/error)
+PROMPT=$'\n'                                                               # new line
+PROMPT+='%B%6F%$((-GITSTATUS_PROMPT_LEN-CONDA_PROMPT_LEN-1))<…<%~%<<%f%b'  # cyan current working directory
+PROMPT+='${GITSTATUS_PROMPT:+ $GITSTATUS_PROMPT}'                          # git status
+PROMPT+='${CONDA_PROMPT}'                                                  # conda env
+PROMPT+=$'\n'                                                              # new line
+PROMPT+='%F{%(?.2.1)}${ZUNDER_PROMPT_CHAR}%f '                             # $ZUNDER_PROMPT_CHAR green/red (ok/error)
