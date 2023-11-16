@@ -79,6 +79,14 @@ function conda_prompt_update() {
   fi
 }
 
+function check_first_prompt() {
+  if [[ $FIRST_PROMPT == false ]]; then
+    printf "\n"
+  else
+    FIRST_PROMPT=false
+  fi
+}
+
 autoload -Uz add-zsh-hook
 
 # On every prompt, fetch git status and set GITSTATUS_PROMPT.
@@ -87,16 +95,18 @@ add-zsh-hook precmd gitstatus_prompt_update
 # On every prompt, fetch conda env and set CONDA_PROMPT.
 add-zsh-hook precmd conda_prompt_update
 
+# Adds a new line if it's not the first prompt.
+add-zsh-hook precmd check_first_prompt
+
 # Enable/disable the right prompt options.
 setopt no_prompt_bang prompt_percent prompt_subst
 
 # Default prompt char
 ZUNDER_PROMPT_CHAR='❯'
-[[ "$TERM" == "linux" ]] && ZUNDER_PROMPT_CHAR='>'  # switch to ascii in tty mode
+[[ "$TERM" == "linux" ]] && ZUNDER_PROMPT_CHAR='>'  # switch to > in tty mode
 
 # The current directory gets truncated from the left if the whole prompt doesn't fit on the line.
-PROMPT=$'\n'                                                               # new line
-PROMPT+='%B%6F%$((-GITSTATUS_PROMPT_LEN-CONDA_PROMPT_LEN-1))<…<%~%<<%f%b'  # cyan current working directory
+PROMPT='%B%6F%$((-GITSTATUS_PROMPT_LEN-CONDA_PROMPT_LEN-1))<…<%~%<<%f%b'   # cyan current working directory
 PROMPT+='${GITSTATUS_PROMPT:+ $GITSTATUS_PROMPT}'                          # git status
 PROMPT+='${CONDA_PROMPT}'                                                  # conda env
 PROMPT+=$'\n'                                                              # new line
