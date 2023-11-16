@@ -4,7 +4,7 @@ Simple and fast zsh prompt based on [gitstatus](https://github.com/romkatv/gitst
 
 ![preview](./assets/preview.webp)
 
-## Why?
+## Why? 🤔
 
 I found myself oscillating between **Starship** and **Powerlevel10k** for my preferred
 zsh prompt. Starship is very customizable and attractive by default,
@@ -27,7 +27,7 @@ the prompt quite a bit, however, this project is the same one that Powerlevel10k
 uses for it and is extremely optimized, so the prompt has **no lag**
 at all and **works instantly**.
 
-## Installation
+## Installation ⚙️
 
 ### Manual
 
@@ -59,14 +59,14 @@ a plugin in that plugin manager.
 I will try to check if it works in the most common ones and give instructions
 if necessary in the future. **Feel free to report to me any errors you find.**
 
-## Customization
+## Customization 🎨
 
 As zunder-prompt is built with simplicity and speed in mind, there isn't too
 much customization available. However, you can change the prompt's character
 symbol.
 
 ```sh
-ZUNDER_PROMPT_CHAR=""              # default value: "❯"
+ZUNDER_PROMPT_CHAR="➜"              # default value: "❯"
 ```
 
 ## Thanks to
