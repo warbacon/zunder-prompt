@@ -105,6 +105,9 @@ setopt no_prompt_bang prompt_percent prompt_subst
 ZUNDER_PROMPT_CHAR='❯'
 [[ "$TERM" == "linux" ]] && ZUNDER_PROMPT_CHAR='>'  # switch to > in tty mode
 
+# Prompt used in multiline commands
+PROMPT2="%8F·%f "
+
 # The current directory gets truncated from the left if the whole prompt doesn't fit on the line.
 PROMPT='%B%6F%$((-GITSTATUS_PROMPT_LEN-CONDA_PROMPT_LEN-1))<…<%~%<<%f%b'   # cyan current working directory
 PROMPT+='${GITSTATUS_PROMPT:+ $GITSTATUS_PROMPT}'                          # git status
