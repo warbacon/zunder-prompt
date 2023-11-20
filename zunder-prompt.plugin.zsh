@@ -17,23 +17,22 @@ function gitstatus_prompt_update() {
   local  untracked='%4F'  # blue foreground
   local conflicted='%1F'  # red foreground
 
-  local p
+  [[ "$TERM" != "linux" ]] && local git_icon=" " # set git_icon if not in tty
+  local p="on %B${clean}${git_icon}"
 
   local where  # branch name, tag or commit
   if [[ -n $VCS_STATUS_LOCAL_BRANCH ]]; then
     where=$VCS_STATUS_LOCAL_BRANCH
   elif [[ -n $VCS_STATUS_TAG ]]; then
-    p+='%f#'
+    p+='#'
     where=$VCS_STATUS_TAG
   else
-    p+='%f@'
+    p+='@'
     where=${VCS_STATUS_COMMIT[1,8]}
   fi
 
-  [[ "$TERM" != "linux" ]] && local git_icon=" " # set git_icon if not in tty
-
-  (( $#where > 32 )) && where[13,-13]="…"         # truncate long branch names and tags
-  p+="on ${clean}${git_icon}%B${where//\%/%%}%b"  # escape %
+  (( $#where > 32 )) && where[13,-13]="…"  # truncate long branch names and tags
+  p+="${where//\%/%%}%b"                   # escape %
 
   # ⇣42 if behind the remote.
   (( VCS_STATUS_COMMITS_BEHIND )) && p+=" ${clean}⇣${VCS_STATUS_COMMITS_BEHIND}"
