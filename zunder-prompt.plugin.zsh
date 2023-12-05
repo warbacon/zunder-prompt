@@ -88,8 +88,10 @@ add-zsh-hook precmd check_first_prompt
 setopt no_prompt_bang prompt_percent prompt_subst
 
 # Default prompt char
-ZUNDER_PROMPT_CHAR='❯'
-[[ "$TERM" == "linux" ]] && ZUNDER_PROMPT_CHAR='>'  # switch to > in tty mode
+if [[ -z "$ZUNDER_PROMPT_CHAR" ]]; then
+  ZUNDER_PROMPT_CHAR='%B❯%b'
+  [[ "$TERM" == "linux" ]] && ZUNDER_PROMPT_CHAR='>'  # switch to > in tty mode
+fi
 
 # Prompt used in multiline commands
 PROMPT2="%8F·%f "
