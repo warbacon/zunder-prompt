@@ -29,35 +29,13 @@ at all and **works instantly**.
 
 ## Installation ⚙️
 
-### Manual
-
-1. Clone this repository wherever you want.
-
-    ```sh
-    git clone https://github.com/Warbacon/zunder-prompt.git
-    ```
-
-2. Source `zunder-prompt.zsh` in your `.zshrc`.
-
-    ```sh
-    source /wherever/you/cloned/this/repo/zunder-prompt.zsh
-    ```
-
 ### Zinit
 
 ```sh
-zinit compile'./gitstatus/(install|*.zsh)' for \
-    Warbacon/zunder-prompt
+zinit light-mode depth"1" if'[[ $DISABLE_ZUNDER_PROMPT != true ]]' for \
+  make"zwc" silent romkatv/gitstatus \
+  warbacon/zunder-prompt
 ```
-
-### Another plugin manager
-
-I have not checked if it works with other plugin managers, but there **should not
-be any problem** as long as you follow the usual procedure to install
-a plugin in that plugin manager.
-
-I will try to check if it works in the most common ones and give instructions
-if necessary in the future. **Feel free to report to me any errors you find.**
 
 ## Customization 🎨
 
@@ -71,6 +49,5 @@ ZUNDER_PROMPT_CHAR="➜"              # default value: "❯"
 
 ## Thanks to
 
-- [gitsatus](https://github.com/romkatv/gitstatus)
-- [Starship](https://starship.rs)
-- [Powerlevel10k](https://github.com/romkatv/powerlevel10k)
+- [romkatv](https://github.com/romkatv) for gitsatus.
+- [Starship](https://starship.rs/).

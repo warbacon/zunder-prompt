@@ -1,7 +1,9 @@
-# # Source gitstatus.plugin.zsh
-0="${ZERO:-${${0:#$ZSH_ARGZERO}:-${(%):-%N}}}"
-0="${${(M)0:#/*}:-$PWD/$0}"
-source "${0:A:h}/gitstatus/gitstatus.plugin.zsh" || return
+# Check if gitstatus is available.
+if ! typeset -f gitstatus_query > /dev/null; then
+  echo "The gitstatus plugin is not installed and is required" \
+       "to use zunder-prompt."
+  return 0
+fi
 
 function gitstatus_prompt_update() {
   emulate -L zsh
