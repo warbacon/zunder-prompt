@@ -32,7 +32,7 @@ at all and **works instantly**.
 ### Zinit
 
 ```sh
-zinit light-mode depth"1" if'[[ $DISABLE_ZUNDER_PROMPT != true ]]' for \
+zinit light-mode depth"1" for \
   make"zwc" romkatv/gitstatus \
   warbacon/zunder-prompt
 ```
