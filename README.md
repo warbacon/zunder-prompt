@@ -33,7 +33,7 @@ at all and **works instantly**.
 
 ```sh
 zinit light-mode depth"1" for \
-  make"zwc" romkatv/gitstatus \
+  romkatv/gitstatus \
   warbacon/zunder-prompt
 ```
 
