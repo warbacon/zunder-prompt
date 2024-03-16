@@ -102,4 +102,4 @@ PROMPT2="%8F·%f "
 PROMPT='%B%6F%$((-GITSTATUS_PROMPT_LEN-1))<…<%~%<<%f%b'   # cyan current working directory
 PROMPT+='${GITSTATUS_PROMPT:+ $GITSTATUS_PROMPT}'         # git status
 PROMPT+=$'\n'                                             # new line
-PROMPT+='%F{%(?.2.1)}${ZUNDER_PROMPT_CHAR}%f '            # $ZUNDER_PROMPT_CHAR green/red (ok/error)
+PROMPT+='%F{%(?.fg.red)}${ZUNDER_PROMPT_CHAR}%f '         # $ZUNDER_PROMPT_CHAR white/red (ok/error)
