@@ -29,12 +29,30 @@ at all and **works instantly**.
 
 ## Installation ⚙️
 
-### Zinit
+### [Zinit](https://github.com/zdharma-continuum/zinit) (recomended)
 
 ```sh
 zinit light-mode depth"1" for \
   romkatv/gitstatus \
   warbacon/zunder-prompt
+```
+
+### [Zgenom](https://github.com/jandamm/zgenom)
+
+```sh
+if ! zgenom saved; then
+  # ...
+  zgenom load romkatv/gitstatus
+  zgenom load warbacon/zunder-prompt
+  # ...
+fi
+```
+
+### [Zplug](https://github.com/zplug/zplug)
+
+```sh
+zplug "romkatv/gitstatus", depth:1
+zplug "warbacon/zunder-prompt", on:"romkatv/gitstatus", depth=1
 ```
 
 ## Customization 🎨
@@ -50,4 +68,4 @@ ZUNDER_PROMPT_CHAR="➜"              # default value: "❯"
 ## Thanks to
 
 - [romkatv](https://github.com/romkatv) for gitsatus.
-- [Starship](https://starship.rs/).
+- [Starship](https://starship.rs/) for inspiration.
