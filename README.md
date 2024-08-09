@@ -4,6 +4,11 @@ Simple and fast zsh prompt based on [gitstatus](https://github.com/romkatv/gitst
 
 ![preview](./assets/preview.webp)
 
+> [!IMPORTANT]
+> gitstatus officially went on life support on June 6, 2024, although it is
+> working properly as of today and will probably do so for an almost indefinite
+> period of time.
+
 ## Why? 🤔
 
 I found myself oscillating between **Starship** and **Powerlevel10k** for my preferred
