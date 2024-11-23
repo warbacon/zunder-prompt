@@ -26,12 +26,19 @@ uses **gitstatus** (like Powerlevel10k) for optimized git info, ensuring
 
 ## Installation ⚙️
 
-### [Zinit](https://github.com/zdharma-continuum/zinit) (recomended)
+### [Zinit](https://github.com/zdharma-continuum/zinit)
 
 ```sh
 zinit light-mode depth"1" for \
   romkatv/gitstatus \
   warbacon/zunder-prompt
+```
+
+### [Zap](https://github.com/zap-zsh/zap)
+
+```sh
+plug "romkatv/gitstatus"
+plug "warbacon/zunder-prompt"
 ```
 
 ### [Zgenom](https://github.com/jandamm/zgenom)
