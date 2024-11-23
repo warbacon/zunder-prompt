@@ -11,26 +11,18 @@ Simple and fast zsh prompt based on [gitstatus](https://github.com/romkatv/gitst
 
 ## Why? 🤔
 
-I found myself oscillating between **Starship** and **Powerlevel10k** for my preferred
-zsh prompt. Starship is very customizable and attractive by default,
-but it has too many features that I don't use and that makes it slower than
-I would like. Powerlevel10k on the other hand is extremely fast but the
-configuration file is extremely complex.
+I oscillated between **Starship** and **Powerlevel10k** for my zsh prompt.
+**Starship** is customizable and visually appealing by default but has
+unnecessary features, making it slower. **Powerlevel10k** is extremely fast but
+has a complex configuration.
 
-My goal then was to create a prompt with the **basic functionality needed**.
-After mulling this over, I came to the conclusion that simply seeing if
-the previous command had failed and the information from the git repository
-I was in was enough.
+My goal was to create a prompt with only the **essential functionality**:
+detecting command failures and displaying basic git repository info. I avoided
+advanced customization to keep the code simple yet aesthetically pleasing.
 
-I also decided to **dispense with too many advanced customization options**,
-as that would complicate the code and would not be necessary
-if it was already pretty enough by default.
-
-Zunder-prompt is inspired by Starship for its look and feel and uses
-gitstatus to display git information. Normally the latter should slow down
-the prompt quite a bit, however, this project is the same one that Powerlevel10k
-uses for it and is extremely optimized, so the prompt has **no lag**
-at all and **works instantly**.
+**Zunder-prompt** combines Starship's style and Powerlevel10k's efficiency. It
+uses **gitstatus** (like Powerlevel10k) for optimized git info, ensuring
+**instant responsiveness** with no lag.
 
 ## Installation ⚙️
 
