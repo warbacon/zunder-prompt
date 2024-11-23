@@ -2,7 +2,7 @@
 
 Simple and fast zsh prompt based on [gitstatus](https://github.com/romkatv/gitstatus).
 
-![preview](./assets/preview.webp)
+![preview](./assets/preview.svg)
 
 > [!IMPORTANT]
 > gitstatus officially went on life support on June 6, 2024, although it is
