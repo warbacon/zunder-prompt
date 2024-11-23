@@ -1,4 +1,4 @@
-# zunder-prompt
+# ⚡ zunder-prompt
 
 Simple and fast zsh prompt based on [gitstatus](https://github.com/romkatv/gitstatus).
 
