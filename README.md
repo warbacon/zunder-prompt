@@ -64,10 +64,12 @@ zplug "warbacon/zunder-prompt", on:"romkatv/gitstatus", depth=1
 
 As zunder-prompt is built with simplicity and speed in mind, there isn't too
 much customization available. However, you can change the prompt's character
-symbol.
+symbol and color.
 
 ```sh
 ZUNDER_PROMPT_CHAR="➜"              # default value: "❯"
+
+ZUNDER_PROMPT_CHAR_COLOR="green"    # default value: "fg"
 ```
 
 ## Thanks to

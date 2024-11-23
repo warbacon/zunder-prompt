@@ -95,11 +95,21 @@ if [[ -z "$ZUNDER_PROMPT_CHAR" ]]; then
   [[ "$TERM" == "linux" ]] && ZUNDER_PROMPT_CHAR='>'  # switch to > in tty mode
 fi
 
+# Default prompt char color (uses terminal foreground color)
+ZUNDER_PROMPT_CHAR_COLOR="fg"
+
 # Prompt used in multiline commands
 PROMPT2="%8F·%f "
 
-# The current directory gets truncated from the left if the whole prompt doesn't fit on the line.
-PROMPT='%B%6F%$((-GITSTATUS_PROMPT_LEN-1))<…<%~%<<%f%b'   # cyan current working directory
-PROMPT+='${GITSTATUS_PROMPT:+ $GITSTATUS_PROMPT}'         # git status
-PROMPT+=$'\n'                                             # new line
-PROMPT+='%F{%(?.fg.red)}${ZUNDER_PROMPT_CHAR}%f '         # $ZUNDER_PROMPT_CHAR white/red (ok/error)
+# Cyan current working directory. Gets truncated from the left if the whole
+# prompt doesn't fit on the line
+PROMPT='%B%6F%$((-GITSTATUS_PROMPT_LEN-1))<…<%~%<<%f%b'
+
+# Git status
+PROMPT+='${GITSTATUS_PROMPT:+ $GITSTATUS_PROMPT}'
+
+# New line
+PROMPT+=$'\n'
+
+# $ZUNDER_PROMPT_CHAR $ZUNDER_PROMPT_CHAR_COLOR/red (ok/error)
+PROMPT+='%F{%(?.${ZUNDER_PROMPT_CHAR_COLOR}.red)}${ZUNDER_PROMPT_CHAR}%f '
